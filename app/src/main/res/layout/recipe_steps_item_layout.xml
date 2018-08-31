@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recipe_step_tv"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:background="@color/colorLightPrimary"
+    android:gravity="center"
+    android:textSize="24sp"
+    tools:text="@string/step_short_description"
+    android:layout_marginTop="8dp" />

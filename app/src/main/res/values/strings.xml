@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">BakingTime</string>
+
+
+    <!-- baking_item_layout.xml -->
+    <string name="delicious_recipe">Delicious recipe</string>
+    <string name="recipe_image_content_description">Recipe picture.</string>
+
+    <!-- recipe_steps_item_layout.xml -->
+    <string name="step_short_description">Step short description</string>
+
+    <!-- ingredients_item_layout.xml -->
+    <string name="ingredient_item">Ingredient 1</string>
+    <string name="quantity">1</string>
+    <string name="measure">CUP</string>
+
+    <!-- fragment_recipe_step_detail.xml -->
+    <string name="step_video_content_description">Video of the recipe step.</string>
+    <string name="recipe_description">Recipe description.</string>
+    <string name="no_step_description">"There is no description for this step."</string>
+    <string name="next_button">Next</string>
+    <string name="back_button">Back</string>
+</resources>
