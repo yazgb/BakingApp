@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.widget.TextView;
 
 import com.android.yaz.bakingtime.model.Recipe;
 import com.android.yaz.bakingtime.utilities.Utility;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.It
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.baking_recycler_view) RecyclerView mRecyclerView;
+    @BindView(R.id.recipes_error_tv) TextView mErrorMessage;
 
     private GridLayoutManager mGridLayoutManager;
     private RecipesAdapter mRecipesAdapter;
@@ -52,7 +55,14 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.It
         mainViewModel.getRecipeList().observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
-                mRecipesAdapter.setRecipesData(recipes);
+                if(recipes != null) {
+                    showRecipesGrid();
+                    mRecipesAdapter.setRecipesData(recipes);
+                }
+                else
+                {
+                    showErrorMessage();
+                }
             }
         });
     }
@@ -64,5 +74,15 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.It
         bundle.putParcelable(CLICKED_RECIPE, clickedRecipe);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    private void showRecipesGrid() {
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mErrorMessage.setVisibility(View.INVISIBLE);
+    }
+
+    private void showErrorMessage() {
+        mRecyclerView.setVisibility(View.INVISIBLE);
+        mErrorMessage.setVisibility(View.VISIBLE);
     }
 }

@@ -11,10 +11,12 @@
         android:layout_margin="8dp"
         app:layoutManager="android.support.v7.widget.GridLayoutManager" />
 
-
     <TextView
-        android:id="@+id/error"
+        android:id="@+id/recipes_error_tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="@string/recipe_error_message" />
 
 </FrameLayout>

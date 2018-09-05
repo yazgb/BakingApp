@@ -48,7 +48,7 @@ public class MainViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Log.d(TAG, "onFailure");
+                recipeList = null;
             }
         });
 

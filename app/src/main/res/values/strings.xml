@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">BakingTime</string>
 
+    <!-- activity_main.xml -->
+    <string name="recipe_error_message">Data not found. Please, try again later.</string>
 
     <!-- baking_item_layout.xml -->
     <string name="delicious_recipe">Delicious recipe</string>
