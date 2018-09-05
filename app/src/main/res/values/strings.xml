@@ -10,9 +10,9 @@
     <string name="step_short_description">Step short description</string>
 
     <!-- ingredients_item_layout.xml -->
-    <string name="ingredient_item">Ingredient 1</string>
-    <string name="quantity">1</string>
-    <string name="measure">CUP</string>
+    <string name="ingredient_item1">Ingredient 1</string>
+    <string name="quantity1">1</string>
+    <string name="measure1">CUP</string>
 
     <!-- fragment_recipe_step_detail.xml -->
     <string name="step_video_content_description">Video of the recipe step.</string>
@@ -20,4 +20,18 @@
     <string name="no_step_description">"There is no description for this step."</string>
     <string name="next_button">Next</string>
     <string name="back_button">Back</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+
+    <!-- baking_time_widget_provider.xml -->
+    <string name="empty_view_text">No recipe selected yet.</string>
+    <string name="empty_image_content_description">Icon of a cake.</string>
+    <string name="baking_time">BakingTime</string>
+
+    <!-- menu.xml -->
+    <string name="desired_recipe_label">Select as desired recipe</string>
+    <string name="preference_file_key">desired_recipe</string>
+    <string name="recipe_name_key">recipe_name</string>
+    <string name="recipe_number_ingredients_key">recipe_number_ingredients</string>
+    <string name="ingredient_key">ingredient%1$d</string>
 </resources>

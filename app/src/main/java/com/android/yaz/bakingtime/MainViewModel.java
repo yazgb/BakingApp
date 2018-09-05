@@ -43,7 +43,6 @@ public class MainViewModel extends ViewModel {
         call.enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                Log.d(TAG, "loadRecipes");
                 recipeList.setValue(response.body());
             }
 

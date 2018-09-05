@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:layout_marginLeft="8dp"
-        tools:text="@string/quantity"/>
+        tools:text="@string/quantity1"/>
 
     <TextView
         android:id="@+id/measure_tv"
@@ -24,7 +24,7 @@
         android:layout_marginLeft="4dp"
         android:layout_marginStart="4dp"
         android:textSize="18sp"
-        tools:text="@string/measure"/>
+        tools:text="@string/measure1"/>
 
     <TextView
         android:id="@+id/ingredient_tv"
@@ -34,6 +34,6 @@
         android:layout_marginStart="8dp"
         android:paddingRight="8dp"
         android:textSize="18sp"
-        tools:text="@string/ingredient_item" />
+        tools:text="@string/ingredient_item1" />
 
 </LinearLayout>

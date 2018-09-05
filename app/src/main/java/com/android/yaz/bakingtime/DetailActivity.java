@@ -1,16 +1,19 @@
 package com.android.yaz.bakingtime;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.RemoteViews;
 
+import com.android.yaz.bakingtime.model.Ingredient;
 import com.android.yaz.bakingtime.model.Recipe;
 import com.android.yaz.bakingtime.model.RecipeStep;
 
@@ -22,24 +25,26 @@ public class DetailActivity extends AppCompatActivity {
     protected static final String STEP_INDEX_SELECTED = "stepIndexSelected";
     protected static final String TWO_PANE = "twoPane";
 
+    private Recipe mRecipe;
     private boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Log.d(TAG, "ON_CREATE DETAIL_ACTIVITY");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        Bundle mBundle = getIntent().getExtras();
+        if(mBundle != null && mBundle.containsKey(MainActivity.CLICKED_RECIPE))
+            mRecipe = mBundle.getParcelable(MainActivity.CLICKED_RECIPE);
+
         if(findViewById(R.id.step_detail_container) != null) {
-            Log.d(TAG, "TWO PANE");
             mTwoPane = true;
 
             if(savedInstanceState == null) {
 
-                Bundle bundle = getIntent().getExtras();
-                if(bundle != null) {
-                    Recipe recipe = bundle.getParcelable(MainActivity.CLICKED_RECIPE);
+                if(mBundle != null) {
+                    Recipe recipe = mBundle.getParcelable(MainActivity.CLICKED_RECIPE);
                     int index = 0;
 
                     if(recipe != null) {
@@ -67,7 +72,6 @@ public class DetailActivity extends AppCompatActivity {
             }
         }
         else {
-            Log.d(TAG, "ONE PANE");
             mTwoPane = false;
         }
     }
@@ -75,7 +79,6 @@ public class DetailActivity extends AppCompatActivity {
     public void onRecipeStepSelected(Recipe recipe, int stepIndex) {
 
         if(mTwoPane) {
-            Log.d(TAG, "REFRESH FRAGMENT VIDEO");
             RecipeStepDetailFragment fragment = (RecipeStepDetailFragment) getSupportFragmentManager().getFragments().get(1);
 
             if(recipe != null) {
@@ -92,7 +95,6 @@ public class DetailActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().detach(fragment).attach(fragment).commit();
 
         } else {
-            Log.d(TAG, "INTENT TO RecipeStepDetailActivity");
             Intent intent = new Intent(DetailActivity.this, RecipeStepDetailActivity.class);
             Bundle bundle = new Bundle();
             bundle.putParcelable(RECIPE_SELECTED, recipe);
@@ -103,20 +105,73 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        Log.d(TAG, "ON_RESUME DETAIL ACTIVITY");
-        super.onResume();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE);
+
+        if (sharedPreferences.contains(getString(R.string.recipe_name_key))) {
+
+            String recipeString = sharedPreferences.getString(getString(R.string.recipe_name_key), null);
+            if (recipeString.contentEquals(mRecipe.getName())) {
+                menu.getItem(0).setChecked(true);
+            } else {
+                menu.getItem(0).setChecked(false);
+            }
+        } else {
+            menu.getItem(0).setChecked(false);
+        }
+
+        return true;
     }
 
     @Override
-    protected void onPause() {
-        Log.d(TAG, "ON_PAUSE DETAIL ACTIVITY");
-        super.onPause();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.action_desired_recipe) {
+
+            if(item.isChecked())
+            {
+                item.setChecked(false);
+            } else {
+                item.setChecked(true);
+            }
+
+            SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            if(item.isChecked()) {
+                editor.putString(getString(R.string.recipe_name_key), mRecipe.getName());
+                Ingredient[] ingredients = mRecipe.getIngredients();
+                editor.putInt(getString(R.string.recipe_number_ingredients_key), ingredients.length );
+                String ingredientStr;
+                for(int i = 0; i < ingredients.length; i++ ) {
+                    ingredientStr = ingredients[i].getQuantity() + " " + ingredients[i].getMeasure() + " " + ingredients[i].getIngredient();
+                    editor.putString(getString(R.string.ingredient_key,i), ingredientStr );
+                }
+                editor.apply();
+            } else {
+                editor.clear();
+                editor.apply();
+            }
+
+            updateAppWidget();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onDestroy() {
-        Log.d(TAG, "ON_DESTROY DETAIL ACTIVITY");
-        super.onDestroy();
+    private void updateAppWidget() {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getApplicationContext());
+        int[] appWidgetsId = appWidgetManager.getAppWidgetIds(new ComponentName(getApplicationContext(), BakingTimeWidgetProvider.class ));
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetsId, R.id.list_view);
+
+        Intent intent = new Intent(getApplicationContext(), BakingTimeWidgetProvider.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetsId);
+        sendBroadcast(intent);
     }
 }

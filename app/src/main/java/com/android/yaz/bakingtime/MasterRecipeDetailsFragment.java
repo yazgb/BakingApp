@@ -1,6 +1,7 @@
 package com.android.yaz.bakingtime;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +11,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -20,6 +24,8 @@ import com.android.yaz.bakingtime.model.RecipeStep;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class MasterRecipeDetailsFragment extends Fragment implements RecipeStepsAdapter.RecipeStepClickListener{
 
@@ -35,8 +41,6 @@ public class MasterRecipeDetailsFragment extends Fragment implements RecipeSteps
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        Log.d(TAG, "ON_CREATE_VIEW MasterRecipeDetailsFragment");
 
         final View rootView = inflater.inflate(R.layout.fragment_master_recipe_details, container, false);
         ButterKnife.bind(this, rootView);
@@ -73,7 +77,6 @@ public class MasterRecipeDetailsFragment extends Fragment implements RecipeSteps
                 }
             }
         }
-
         return rootView;
     }
 
@@ -81,41 +84,5 @@ public class MasterRecipeDetailsFragment extends Fragment implements RecipeSteps
     public void stepClick(int stepIndex) {
 
         ((DetailActivity) getActivity()).onRecipeStepSelected(mRecipe, stepIndex);
-    }
-
-    @Override
-    public void onDestroy() {
-        Log.d(TAG, "ON_DESTROY MasterRecipeDetailsFragment");
-        super.onDestroy();
-    }
-
-    @Override
-    public void onPause() {
-        Log.d(TAG, "ON_PAUSE MasterRecipeDetailsFragment");
-        super.onPause();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "ON_CREATE MasterRecipeDetailsFragment");
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onResume() {
-        Log.d(TAG, "ON_RESUME MasterRecipeDetailsFragment");
-        super.onResume();
-    }
-
-    @Override
-    public void onStart() {
-        Log.d(TAG, "ON_START MasterRecipeDetailsFragment");
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        Log.d(TAG, "ON_STOP MasterRecipeDetailsFragment");
-        super.onStop();
     }
 }

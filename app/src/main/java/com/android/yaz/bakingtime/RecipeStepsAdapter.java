@@ -26,7 +26,6 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     }
 
     public RecipeStepsAdapter(RecipeStep[] recipeStepsData, RecipeStepClickListener recipeStepClickListener) {
-        Log.d(TAG, "RECIPE STEPS ADAPTER CREATED");
         mRecipeStepsData = recipeStepsData;
         mOnClickListener = recipeStepClickListener;
     }
@@ -72,8 +71,6 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
 
         @Override
         public void onClick(View view) {
-            Log.d(TAG,"ON_CLICK_STEP" );
-
             int recipeStepIndex = getAdapterPosition();
             mOnClickListener.stepClick(recipeStepIndex);
         }

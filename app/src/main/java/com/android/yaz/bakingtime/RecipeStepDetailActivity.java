@@ -1,10 +1,15 @@
 package com.android.yaz.bakingtime;
 
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
+import com.android.yaz.bakingtime.model.Ingredient;
 import com.android.yaz.bakingtime.model.Recipe;
 import com.android.yaz.bakingtime.model.RecipeStep;
 
@@ -15,12 +20,10 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Log.d(TAG, "ON_CREATE_RecipeStepDetailActivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_step_detail);
 
         if(savedInstanceState == null) {
-            Log.d(TAG, "ACTIVITY savedInstanceState NULL");
             Bundle mBundle = getIntent().getExtras();
             if(mBundle!=null) {
                 Recipe mRecipe = mBundle.getParcelable(DetailActivity.RECIPE_SELECTED);
@@ -44,16 +47,11 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
                             .commit();
                 }
             }
-        } else {
-            Log.d(TAG, "ACTIVITY savedInstanceState NO NULL");
         }
     }
 
 
     public void replaceRecipeStep(RecipeStep[] steps, int stepIndex) {
-
-        Log.d(TAG, "replaceRecipeStep NEW INDEX: " + stepIndex);
-        Log.d(TAG, steps!=null? "# of steps: "+ steps.length : "steps array es null");
 
         RecipeStepDetailFragment fragment = (RecipeStepDetailFragment) getSupportFragmentManager().getFragments().get(0);
 
@@ -68,6 +66,5 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().detach(fragment).attach(fragment).commit();
-
     }
 }

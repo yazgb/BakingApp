@@ -33,6 +33,10 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesA
         this.mOnClickListener = onClickListener;
     }
 
+    public List<Recipe> getRecipesData() {
+        return mRecipesData;
+    }
+
     @NonNull
     @Override
     public RecipesAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
