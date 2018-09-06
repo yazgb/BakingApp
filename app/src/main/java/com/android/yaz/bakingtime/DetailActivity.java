@@ -12,10 +12,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 
 import com.android.yaz.bakingtime.model.Ingredient;
 import com.android.yaz.bakingtime.model.Recipe;
 import com.android.yaz.bakingtime.model.RecipeStep;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -28,15 +32,21 @@ public class DetailActivity extends AppCompatActivity {
     private Recipe mRecipe;
     private boolean mTwoPane;
 
+    @BindView(R.id.recipe_name_text_view) TextView mRecipeName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        ButterKnife.bind(this);
 
         Bundle mBundle = getIntent().getExtras();
-        if(mBundle != null && mBundle.containsKey(MainActivity.CLICKED_RECIPE))
+        if(mBundle != null && mBundle.containsKey(MainActivity.CLICKED_RECIPE)) {
             mRecipe = mBundle.getParcelable(MainActivity.CLICKED_RECIPE);
+
+            mRecipeName.setText(mRecipe.getName());
+        }
 
         if(findViewById(R.id.step_detail_container) != null) {
             mTwoPane = true;

@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/mater_recipe_steps_fragment"
-    android:name="com.android.yaz.bakingtime.MasterRecipeDetailsFragment"
-    tools:layout="@layout/fragment_master_recipe_details" />
+    android:orientation="vertical"
+    tools:context=".DetailActivity">
+
+    <TextView
+        android:id="@+id/recipe_name_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="16dp"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        tools:text="@string/delicious_recipe"/>
+
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mater_recipe_steps_fragment"
+        android:name="com.android.yaz.bakingtime.MasterRecipeDetailsFragment"
+        tools:layout="@layout/fragment_master_recipe_details" />
+
+</LinearLayout>

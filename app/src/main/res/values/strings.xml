@@ -16,6 +16,10 @@
     <string name="quantity1">1</string>
     <string name="measure1">CUP</string>
 
+    <!-- fragment_master_recipe_details.xml -->
+    <string name="ingredients_label">Ingredients</string>
+    <string name="steps_label">Steps</string>
+
     <!-- fragment_recipe_step_detail.xml -->
     <string name="step_video_content_description">Video of the recipe step.</string>
     <string name="recipe_description">Recipe description.</string>
