@@ -7,8 +7,6 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.android.yaz.bakingtime.model.Ingredient;
-
 import java.util.ArrayList;
 import java.util.List;
 

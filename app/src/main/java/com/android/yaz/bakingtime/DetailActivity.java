@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.android.yaz.bakingtime.model.Ingredient;
