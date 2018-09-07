@@ -3,7 +3,10 @@ package com.android.yaz.bakingtime;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.yaz.bakingtime.IdlingResource.SimpleIdlingResource;
 import com.android.yaz.bakingtime.model.Recipe;
 import com.android.yaz.bakingtime.utilities.Utility;
 
@@ -28,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.It
 
     @BindView(R.id.baking_recycler_view) RecyclerView mRecyclerView;
     @BindView(R.id.recipes_error_tv) TextView mErrorMessage;
+
+    @Nullable private SimpleIdlingResource mIdlingResource;
 
     private GridLayoutManager mGridLayoutManager;
     private RecipesAdapter mRecipesAdapter;
@@ -50,6 +56,10 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.It
         mRecipesAdapter = new RecipesAdapter(MainActivity.this, null, MainActivity.this);
         mRecyclerView.setAdapter(mRecipesAdapter);
 
+        getIdlingResource();
+        if(mIdlingResource != null)
+            mIdlingResource.setIdleState(false);
+
         MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         mainViewModel.getRecipeList().observe(this, new Observer<List<Recipe>>() {
@@ -58,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.It
                 if(recipes != null) {
                     showRecipesGrid();
                     mRecipesAdapter.setRecipesData(recipes);
+                    if(mIdlingResource != null)
+                        mIdlingResource.setIdleState(true);
                 }
                 else
                 {
@@ -84,5 +96,14 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.It
     private void showErrorMessage() {
         mRecyclerView.setVisibility(View.INVISIBLE);
         mErrorMessage.setVisibility(View.VISIBLE);
+    }
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if(mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
     }
 }
