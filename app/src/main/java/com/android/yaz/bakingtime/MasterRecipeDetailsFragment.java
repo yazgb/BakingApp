@@ -1,6 +1,7 @@
 package com.android.yaz.bakingtime;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -55,7 +56,11 @@ public class MasterRecipeDetailsFragment extends Fragment implements RecipeSteps
 
                         mIngredientsRecyclerView.setHasFixedSize(true);
                         LinearLayoutManager mIngredientsLinearLayoutManager = new LinearLayoutManager(this.getActivity());
-                        mIngredientsLinearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE &&
+                                !(getResources().getConfiguration().smallestScreenWidthDp >= 600)) {
+                            mIngredientsLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                        } else
+                            mIngredientsLinearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                         mIngredientsRecyclerView.setLayoutManager(mIngredientsLinearLayoutManager);
                         IngredientsAdapter mIngredientsAdapter = new IngredientsAdapter(ingredients);
                         mIngredientsRecyclerView.setAdapter(mIngredientsAdapter);
